@@ -40,11 +40,12 @@ code {
 .infoForUser {
   padding: 20px;
   margin: 15px auto;
-  color: #3f51b5;
+  color: white;
   max-width: 30vw;
   font-size: 16px;
   font-weight: 700;
-  border: #3f51b5 1px groove;
+
   border-radius: 20px;
-  box-shadow: 0px 0px 30px #3f51b5;
+
+  background: linear-gradient(to top, rgba(255, 0, 204), rgba(51, 51, 153));
 }
