@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import css from './Searchbar.module.css';
 
-const Searchbar = ({ onSubmit }) => {
+const Searchbar = ({ onSubmit, setPage }) => {
   const [searchInputTerm, setSearchInputTerm] = useState('');
+
+  useEffect(() => {
+    setPage(1); // Resetowanie strony do 1 po zmianie wartości searchInputTerm
+  }, [searchInputTerm, setPage]);
 
   const handleInputChange = event => {
     setSearchInputTerm(event.target.value);
@@ -11,6 +15,7 @@ const Searchbar = ({ onSubmit }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
+
     onSubmit(searchInputTerm);
     // setSearchInputTerm(''); // Czyszczenie pola wyszukiwania po wysłaniu formularza. Input znów jest pusty.
   };

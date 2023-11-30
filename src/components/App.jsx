@@ -19,6 +19,7 @@ const App = () => {
   const handleSearch = async searchTerm => {
     setIsLoading(true);
     setImages([]);
+    setPage(1);
 
     //jeśli zawartość inputa jest pusta następuje blokada wyszukiwania i komunikat dla użytkownika
 
@@ -98,7 +99,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Searchbar onSubmit={handleSearch} />
+      <Searchbar onSubmit={handleSearch} setPage={setPage} />
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {isLoading && <Loader />}
       {hasMoreImages && (
