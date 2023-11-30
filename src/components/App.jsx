@@ -71,6 +71,7 @@ const App = () => {
 
       if (data.hits) {
         setImages(prevImages => [...prevImages, ...data.hits]);
+        setPage(nextPage);
       }
     } catch (error) {
       Notify.failure('Oops! Something went wrong while fetching images.');
