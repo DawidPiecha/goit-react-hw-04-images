@@ -39,7 +39,7 @@ const App = () => {
         if (data.totalHits === 0) {
           setImages([]);
           Notify.failure(
-            `Sorry, There's no images for "${searchTerm.toUpperCase()}" `
+            `Sorry, There's no images for "${searchTerm.toUpperCase()}. Please try again!" `
           );
         } else if (data.totalHits <= 12) {
           Notify.success(
@@ -91,7 +91,7 @@ const App = () => {
 
   const hasMoreImages = images.length < totalImages;
 
-  const noMoreImages = images.length === totalImages;
+  const noMoreImages = images.length === totalImages && images.length !== 0;
 
   const largedSearchTerm = searchTerm.toUpperCase();
 

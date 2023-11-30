@@ -1,40 +1,38 @@
-import React, { Component } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import css from './Modal.module.css';
 
-class Modal extends Component {
-  handleKeyUp = event => {
-    const { showModal, onModalClose } = this.props;
-    if (event.key === 'Escape' && showModal) {
+const Modal = ({ showModal, onModalClose, imageUrl }) => {
+  // ta funkcja pozwala na zamknięcie modala po kliknięciu na overlay. nasłuch handleModalClose został założony na divie-overlay więc event.currentTarget dotyczy właśnie tego diva
+  const handleModalClose = event => {
+    if (event.target === event.currentTarget) {
       onModalClose();
     }
   };
 
-  handleModalClose = event => {
-    if (event.target === event.currentTarget) {
-      this.props.onModalClose();
-    }
-  };
+  useEffect(() => {
+    //funkcja która działa tak: jeśli modal jest otwarty i jednocześnie zostaje naciśnięty ESC - zamyka się modal. OnModalClose ma swoje źrodło w app.jsx
+    const handleKeyUp = event => {
+      if (event.key === 'Escape' && showModal) {
+        onModalClose();
+      }
+    };
+    //dadanie nasłuchu podczas montowania komponentu
+    const keyListener = window.addEventListener('keydown', handleKeyUp);
+    //usunięcie nasłuchu po odmontowaniu komponentu
+    return () => {
+      window.removeEventListener('keydown', keyListener);
+    };
+  }, [showModal, onModalClose]);
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyUp);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyUp);
-  }
-
-  render() {
-    const { imageUrl } = this.props;
-    return (
-      <div className={css.Overlay} onClick={this.handleModalClose}>
-        <div className={css.Modal}>
-          <img className={css.ModalImage} src={imageUrl} alt="Large" />
-        </div>
+  return (
+    <div className={css.Overlay} onClick={handleModalClose}>
+      <div className={css.Modal}>
+        <img className={css.ModalImage} src={imageUrl} alt="Large" />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 Modal.propTypes = {
   imageUrl: PropTypes.string.isRequired,
